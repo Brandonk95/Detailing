@@ -1,0 +1,6 @@
+[20-Apr-2026 22:25:28 UTC] PHP Warning:  JIT is incompatible with third party extensions that override zend_execute_ex(). JIT disabled. in Unknown on line 0
+[20-Apr-2026 22:29:23 UTC] PHP Warning:  JIT is incompatible with third party extensions that override zend_execute_ex(). JIT disabled. in Unknown on line 0
+[20-Apr-2026 22:35:55 UTC] PHP Warning:  JIT is incompatible with third party extensions that override zend_execute_ex(). JIT disabled. in Unknown on line 0
+[20-Apr-2026 22:36:58 UTC] PHP Warning:  JIT is incompatible with third party extensions that override zend_execute_ex(). JIT disabled. in Unknown on line 0
+[20-Apr-2026 23:16:30 UTC] PHP Warning:  JIT is incompatible with third party extensions that override zend_execute_ex(). JIT disabled. in Unknown on line 0
+[20-Apr-2026 23:17:50 UTC] PHP Warning:  JIT is incompatible with third party extensions that override zend_execute_ex(). JIT disabled. in Unknown on line 0
