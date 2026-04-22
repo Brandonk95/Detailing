@@ -769,7 +769,34 @@
 			font-size: 0.82rem;
 			color: var(--ink-muted);
 			margin-top: 1.2rem;
+			margin-bottom: 2.5rem;
 		}
+
+		.addons-label {
+			font-size: 0.68rem;
+			letter-spacing: 0.25em;
+			text-transform: uppercase;
+			color: var(--rust);
+			margin-bottom: 0.8rem;
+			display: flex;
+			align-items: center;
+			gap: 0.7rem;
+		}
+
+		.addons-label::before {
+			content: '';
+			display: block;
+			width: 22px;
+			height: 1.5px;
+			background: var(--rust);
+		}
+
+		.addons-table {
+			max-width: 360px;
+		}
+
+		.addons-table td { text-align: left; }
+		.addons-table td:last-child { text-align: center; }
 
 		/* ---- RESPONSIVE ---- */
 		@media (max-width: 900px) {
@@ -857,7 +884,7 @@
 						<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M4.93 4.93l14.14 14.14"/></svg>
 					</div>
 					<h3>Basic Exterior</h3>
-					<p>Hand wash, wheel and tire clean, windows, and a spray sealant finish. A solid maintenance wash that keeps your vehicle looking sharp between full details.</p>
+					<p>Hand wash, windows, and a spray sealant finish. A solid maintenance wash that keeps your vehicle looking sharp between full details.</p>
 					<span class="service-tag">Exterior</span>
 				</div>
 				<div class="service-card">
@@ -865,7 +892,7 @@
 						<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
 					</div>
 					<h3>Full Exterior</h3>
-					<p>Hand wash, clay bar decontamination, deep wheel and tire clean, glass, and paint protection sealant. Every panel gets proper attention.</p>
+					<p>Hand wash, deep wheel and tire clean, glass, hand wax, and a ceramic sealant finish. Every panel gets proper attention.</p>
 					<span class="service-tag">Exterior</span>
 				</div>
 				<div class="service-card">
@@ -950,20 +977,29 @@
 						<td>$140</td>
 						<td>$150</td>
 					</tr>
-					<tr class="pricing-divider">
-						<td colspan="4">Add-Ons &mdash; Flat Rate</td>
-					</tr>
-					<tr class="pricing-addon">
-						<td>Engine Bay Cleaning</td>
-						<td colspan="3" style="text-align:center;">$25</td>
-					</tr>
-					<tr class="pricing-addon">
-						<td>Odor Elimination</td>
-						<td colspan="3" style="text-align:center;">$45</td>
-					</tr>
 				</tbody>
 			</table>
 			<p class="pricing-note">Not sure which tier fits? Describe your vehicle in the quote form and I'll sort it out.</p>
+
+			<div class="addons-label">Add-Ons &mdash; Flat Rate</div>
+			<table class="pricing-table addons-table">
+				<thead>
+					<tr>
+						<th style="text-align:left;">Service</th>
+						<th>Price</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="pricing-addon">
+						<td>Engine Bay Cleaning</td>
+						<td>$25</td>
+					</tr>
+					<tr class="pricing-addon">
+						<td>Odor Elimination</td>
+						<td>$45</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</section>
 
