@@ -755,14 +755,6 @@
 			border-top: 1px solid var(--border-dark);
 		}
 
-		.pricing-table tr.pricing-addon td {
-			color: var(--ink-soft);
-		}
-
-		.pricing-table tr.pricing-addon td:first-child {
-			color: var(--ink);
-		}
-
 		.pricing-note {
 			font-family: 'Lora', serif;
 			font-style: italic;
@@ -772,31 +764,6 @@
 			margin-bottom: 2.5rem;
 		}
 
-		.addons-label {
-			font-size: 0.68rem;
-			letter-spacing: 0.25em;
-			text-transform: uppercase;
-			color: var(--rust);
-			margin-bottom: 0.8rem;
-			display: flex;
-			align-items: center;
-			gap: 0.7rem;
-		}
-
-		.addons-label::before {
-			content: '';
-			display: block;
-			width: 22px;
-			height: 1.5px;
-			background: var(--rust);
-		}
-
-		.addons-table {
-			max-width: 360px;
-		}
-
-		.addons-table td { text-align: left; }
-		.addons-table td:last-child { text-align: center; }
 
 		/* ---- RESPONSIVE ---- */
 		@media (max-width: 900px) {
@@ -915,14 +882,6 @@
 					<p>The complete interior and exterior treatment together. Best value if you want the whole vehicle done right in one appointment.</p>
 					<span class="service-tag">Best Value</span>
 				</div>
-				<div class="service-card">
-					<div class="service-icon">
-						<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
-					</div>
-					<h3>Add-Ons</h3>
-					<p>Engine bay cleaning, odor elimination, and headlight restoration available as add-ons to any service. See the pricing section for rates.</p>
-					<span class="service-tag">Customizable</span>
-				</div>
 			</div>
 		</div>
 	</section>
@@ -977,25 +936,6 @@
 			</table>
 			<p class="pricing-note">Not sure which tier fits? Describe your vehicle in the quote form and I'll sort it out.</p>
 
-			<div class="addons-label">Add-Ons &mdash; Flat Rate</div>
-			<table class="pricing-table addons-table">
-				<thead>
-					<tr>
-						<th style="text-align:left;">Service</th>
-						<th>Price</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr class="pricing-addon">
-						<td>Engine Bay Cleaning</td>
-						<td>$45</td>
-					</tr>
-					<tr class="pricing-addon">
-						<td>Odor Elimination</td>
-						<td>$55</td>
-					</tr>
-				</tbody>
-			</table>
 		</div>
 	</section>
 
