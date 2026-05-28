@@ -307,17 +307,16 @@
 		}
 
 		.card-desc-panel {
-			max-height: 0;
-			overflow: hidden;
-			transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease, margin 0.3s ease;
+			height: 80px;
+			transition: opacity 0.2s ease;
 			opacity: 0;
-			margin-top: 0;
+			margin-top: 0.9rem;
+			pointer-events: none;
 		}
 
 		.card-desc-panel.visible {
-			max-height: 120px;
 			opacity: 1;
-			margin-top: 0.9rem;
+			pointer-events: auto;
 		}
 
 		.card-desc-inner {
@@ -521,8 +520,10 @@
 		const descName = document.getElementById('descName');
 		const descText = document.getElementById('descText');
 		let activeTag = null;
+		let hideTimer = null;
 
 		function showDesc(tag) {
+			clearTimeout(hideTimer);
 			descName.textContent = tag.textContent.replace(/[+×]/g, '').trim();
 			descText.textContent = tag.dataset.desc;
 			panel.classList.add('visible');
@@ -535,13 +536,13 @@
 		tags.forEach(tag => {
 			// Desktop hover
 			tag.addEventListener('mouseenter', () => {
-				if (activeTag) return; // don't override a tap-locked selection
+				if (activeTag) return;
 				showDesc(tag);
 			});
 
 			tag.addEventListener('mouseleave', () => {
 				if (activeTag) return;
-				hideDesc();
+				hideTimer = setTimeout(hideDesc, 220);
 			});
 
 			// Mobile tap / click toggle
