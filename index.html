@@ -713,8 +713,16 @@
 		/* ---- PRICING ---- */
 		#pricing { background: var(--parchment); }
 
+		.table-scroll {
+			width: 100%;
+			overflow-x: auto;
+			-webkit-overflow-scrolling: touch;
+			border-radius: 4px;
+		}
+
 		.pricing-table {
 			width: 100%;
+			min-width: 420px;
 			border-collapse: collapse;
 			border: 1px solid var(--border);
 			border-radius: 4px;
@@ -813,6 +821,10 @@
 			.why-panel, .area-visual { display: none; }
 			footer { padding: 2rem 1.5rem; }
 			.footer-inner { flex-direction: column; align-items: flex-start; }
+			.pricing-table { font-size: 0.78rem; min-width: 340px; }
+			.pricing-table th,
+			.pricing-table td { padding: 0.75rem 0.8rem; }
+			.pricing-tier-sub { font-size: 0.55rem; }
 		}
 	</style>
 </head>
@@ -929,6 +941,7 @@
 			<div class="section-label">Rates</div>
 			<h2>Pricing</h2>
 			<p class="section-desc">Flat rates based on vehicle size. Prices are listed — what you see is what you pay.</p>
+			<div class="table-scroll">
 			<table class="pricing-table">
 				<thead>
 					<tr>
@@ -971,6 +984,7 @@
 					</tr>
 				</tbody>
 			</table>
+			</div>
 			<p class="pricing-note">Not sure which tier fits? Mention it in the booking form and I'll confirm before we get started.</p>
 			<p style="font-size:0.72rem; color:var(--ink-muted); margin-top:0.75rem;">* Vehicles in exceptionally poor condition may be subject to an upcharge. I'll let you know before we get started.</p>
 
