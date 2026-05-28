@@ -41,7 +41,7 @@
 			align-items: center;
 			justify-content: center;
 			min-height: 100vh;
-			padding: 2rem;
+			padding: clamp(1rem, 4vw, 2.5rem);
 		}
 
 		/* Textured noise overlay */
@@ -78,7 +78,7 @@
 			position: relative;
 			z-index: 1;
 			width: 100%;
-			max-width: 400px;
+			max-width: min(400px, 100%);
 			animation: rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
 		}
 
@@ -92,7 +92,7 @@
 		}
 
 		.card-header-inner {
-			padding: 2.6rem 2.4rem 3.5rem;
+			padding: clamp(1.6rem, 5vw, 2.6rem) clamp(1.4rem, 5vw, 2.4rem) clamp(2.5rem, 6vw, 3.5rem);
 			position: relative;
 			z-index: 2;
 		}
@@ -103,7 +103,7 @@
 			top: -1rem;
 			right: -0.5rem;
 			font-family: 'Playfair Display', serif;
-			font-size: 11rem;
+			font-size: clamp(7rem, 22vw, 11rem);
 			font-weight: 900;
 			font-style: italic;
 			color: rgba(255,255,255,0.04);
@@ -132,7 +132,7 @@
 		.card-name {
 			font-family: 'Playfair Display', serif;
 			font-weight: 900;
-			font-size: 3rem;
+			font-size: clamp(2.2rem, 8vw, 3rem);
 			line-height: 0.95;
 			color: var(--parchment);
 			margin-bottom: 0.9rem;
@@ -165,7 +165,7 @@
 		/* ---- BODY ---- */
 		.card-body {
 			background: var(--parchment);
-			padding: 2rem 2.4rem 1.6rem;
+			padding: clamp(1.4rem, 5vw, 2rem) clamp(1.4rem, 5vw, 2.4rem) clamp(1.2rem, 4vw, 1.6rem);
 		}
 
 		/* Contact rows */
@@ -252,8 +252,93 @@
 			color: var(--pine);
 			background: var(--pine-pale);
 			border: 1px solid rgba(44,74,46,0.2);
-			padding: 0.3rem 0.75rem;
+			padding: 0.3rem 0.75rem 0.3rem 0.65rem;
 			border-radius: 20px;
+			cursor: pointer;
+			user-select: none;
+			display: inline-flex;
+			align-items: center;
+			gap: 0.35rem;
+			transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.15s;
+		}
+
+		.card-tag::before {
+			content: '+';
+			font-size: 0.7rem;
+			font-weight: 500;
+			line-height: 1;
+			opacity: 0.6;
+			transition: transform 0.2s, opacity 0.2s;
+		}
+
+		.card-tag:hover,
+		.card-tag.active {
+			background: var(--pine);
+			color: var(--parchment);
+			border-color: var(--pine);
+			transform: translateY(-1px);
+		}
+
+		.card-tag.active::before {
+			content: '×';
+			opacity: 1;
+			transform: rotate(0deg);
+		}
+
+		.card-hint {
+			font-size: 0.6rem;
+			letter-spacing: 0.1em;
+			text-transform: uppercase;
+			color: var(--ink-muted);
+			margin-top: 0.6rem;
+			display: flex;
+			align-items: center;
+			gap: 0.4rem;
+		}
+
+		.card-hint::before {
+			content: '';
+			display: inline-block;
+			width: 5px;
+			height: 5px;
+			border-radius: 50%;
+			background: var(--rust);
+			opacity: 0.6;
+		}
+
+		.card-desc-panel {
+			max-height: 0;
+			overflow: hidden;
+			transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease, margin 0.3s ease;
+			opacity: 0;
+			margin-top: 0;
+		}
+
+		.card-desc-panel.visible {
+			max-height: 120px;
+			opacity: 1;
+			margin-top: 0.9rem;
+		}
+
+		.card-desc-inner {
+			background: var(--parchment-d);
+			border-left: 2px solid var(--pine);
+			border-radius: 0 4px 4px 0;
+			padding: 0.75rem 1rem;
+		}
+
+		.card-desc-name {
+			font-family: 'Playfair Display', serif;
+			font-size: 0.82rem;
+			font-weight: 700;
+			color: var(--pine);
+			margin-bottom: 0.25rem;
+		}
+
+		.card-desc-text {
+			font-size: 0.8rem;
+			color: var(--ink-soft);
+			line-height: 1.55;
 		}
 
 		/* CTA button */
@@ -286,11 +371,13 @@
 		.card-footer {
 			background: var(--parchment-d);
 			border-radius: 0 0 8px 8px;
-			padding: 0.9rem 2.4rem;
+			padding: 0.9rem clamp(1.4rem, 5vw, 2.4rem);
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
 			border-top: 1px solid var(--border);
+			flex-wrap: wrap;
+			gap: 0.4rem;
 		}
 
 		.card-footer-text {
@@ -306,6 +393,28 @@
 			border-radius: 50%;
 			background: var(--rust);
 			opacity: 0.6;
+		}
+		/* ---- RESPONSIVE ---- */
+
+		/* Large screens — add more breathing room around the card */
+		@media (min-width: 600px) {
+			body { align-items: center; }
+			.card { box-shadow: 0 48px 120px rgba(0,0,0,0.5), 0 12px 32px rgba(0,0,0,0.3); }
+		}
+
+		/* Small phones */
+		@media (max-width: 380px) {
+			.card-contact-row { gap: 0.7rem; }
+			.card-contact-text { font-size: 0.82rem; }
+			.card-tag { font-size: 0.58rem; padding: 0.25rem 0.6rem; }
+			.card-footer-text { font-size: 0.58rem; }
+			.card-footer-dot { display: none; }
+			.card-btn { font-size: 0.68rem; padding: 0.85rem; }
+		}
+
+		/* Tall screens — vertically center with more room */
+		@media (min-height: 900px) {
+			body { padding: 3rem; }
 		}
 	</style>
 </head>
@@ -374,11 +483,18 @@
 			<div class="card-services-wrap">
 				<div class="card-services-header">Services</div>
 				<div class="card-tags">
-					<span class="card-tag">The Usual</span>
-					<span class="card-tag">Trail Ready</span>
-					<span class="card-tag">Mud Season</span>
-					<span class="card-tag">Date Night</span>
-					<span class="card-tag">Showstopper</span>
+					<span class="card-tag" data-desc="Hand wash, windows, and a spray sealant finish. A clean, sharp look for regular upkeep.">The Usual</span>
+					<span class="card-tag" data-desc="Full hand wash, deep wheel and tire clean, glass, hand wax, ceramic sealant, and sun-faded plastic trim restoration.">Trail Ready</span>
+					<span class="card-tag" data-desc="Vacuum throughout, full surface wipe-down, and window cleaning. A quick, clean interior refresh.">Mud Season</span>
+					<span class="card-tag" data-desc="Deep vacuum, full wipe-down, carpet and upholstery extraction, door jambs, and interior dressing. A complete reset.">Date Night</span>
+					<span class="card-tag" data-desc="The full interior and exterior treatment together. Top to bottom, inside and out — done right.">Showstopper</span>
+				</div>
+				<div class="card-hint">Tap a service to learn more</div>
+				<div class="card-desc-panel" id="serviceDesc">
+					<div class="card-desc-inner">
+						<div class="card-desc-name" id="descName"></div>
+						<div class="card-desc-text" id="descText"></div>
+					</div>
 				</div>
 			</div>
 
@@ -398,6 +514,62 @@
 		</div>
 
 	</div>
+
+	<script>
+		const tags = document.querySelectorAll('.card-tag');
+		const panel = document.getElementById('serviceDesc');
+		const descName = document.getElementById('descName');
+		const descText = document.getElementById('descText');
+		let activeTag = null;
+
+		function showDesc(tag) {
+			descName.textContent = tag.textContent.replace(/[+×]/g, '').trim();
+			descText.textContent = tag.dataset.desc;
+			panel.classList.add('visible');
+		}
+
+		function hideDesc() {
+			panel.classList.remove('visible');
+		}
+
+		tags.forEach(tag => {
+			// Desktop hover
+			tag.addEventListener('mouseenter', () => {
+				if (activeTag) return; // don't override a tap-locked selection
+				showDesc(tag);
+			});
+
+			tag.addEventListener('mouseleave', () => {
+				if (activeTag) return;
+				hideDesc();
+			});
+
+			// Mobile tap / click toggle
+			tag.addEventListener('click', (e) => {
+				e.stopPropagation();
+				if (activeTag === tag) {
+					// Deselect
+					tag.classList.remove('active');
+					activeTag = null;
+					hideDesc();
+				} else {
+					if (activeTag) activeTag.classList.remove('active');
+					activeTag = tag;
+					tag.classList.add('active');
+					showDesc(tag);
+				}
+			});
+		});
+
+		// Tap outside to dismiss
+		document.addEventListener('click', () => {
+			if (activeTag) {
+				activeTag.classList.remove('active');
+				activeTag = null;
+				hideDesc();
+			}
+		});
+	</script>
 
 </body>
 </html>
