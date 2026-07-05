@@ -719,25 +719,49 @@
 		.service-pick-btn.active .service-pick-name { color: var(--parchment); }
 		.service-pick-btn.active .service-pick-sub { color: var(--stone); }
 
-		.change-service-btn {
-			display: block;
-			width: 100%;
+		.selected-service-bar {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 1rem;
+			flex-wrap: wrap;
 			background: var(--parchment);
-			border: none;
 			border-bottom: 1.5px solid var(--border);
+			padding: 0.9rem 1.2rem;
+		}
+
+		.selected-service-bar[hidden] {
+			display: none;
+		}
+
+		.selected-service-label {
+			font-family: 'DM Sans', sans-serif;
+			font-size: 0.8rem;
+			color: var(--ink-soft);
+		}
+
+		.selected-service-label strong {
+			color: var(--pine);
+		}
+
+		.change-service-btn {
+			flex-shrink: 0;
+			background: transparent;
+			border: 1.5px solid var(--border-dark);
+			border-radius: 3px;
 			color: var(--pine-mid);
 			font-family: 'DM Sans', sans-serif;
-			font-size: 0.78rem;
+			font-size: 0.72rem;
 			font-weight: 500;
 			letter-spacing: 0.1em;
 			text-transform: uppercase;
-			padding: 0.9rem 1.2rem;
+			padding: 0.5rem 0.9rem;
 			cursor: pointer;
-			transition: background 0.2s, color 0.2s;
+			transition: border-color 0.2s, color 0.2s;
 		}
 
 		.change-service-btn:hover {
-			background: var(--pine-pale);
+			border-color: var(--pine);
 			color: var(--pine);
 		}
 
@@ -1242,7 +1266,10 @@
 							<span class="service-pick-sub">Full Detail</span>
 						</button>
 					</div>
-					<button type="button" id="change-service-btn" class="change-service-btn" hidden>Change job type</button>
+					<div id="selected-service-bar" class="selected-service-bar" hidden>
+						<span class="selected-service-label">Booking: <strong id="selected-service-name"></strong></span>
+						<button type="button" id="change-service-btn" class="change-service-btn">Change job type</button>
+					</div>
 					<div id="calendly-embed" class="calendly-embed-container">
 						<p class="calendly-placeholder">Choose a service above to see available times.</p>
 					</div>
@@ -1253,6 +1280,8 @@
 						var picker = document.querySelector('.service-picker');
 						var buttons = document.querySelectorAll('.service-pick-btn');
 						var container = document.getElementById('calendly-embed');
+						var selectedBar = document.getElementById('selected-service-bar');
+						var selectedName = document.getElementById('selected-service-name');
 						var changeBtn = document.getElementById('change-service-btn');
 
 						function waitForCalendly(cb) {
@@ -1264,7 +1293,8 @@
 								buttons.forEach(function (b) { b.classList.remove('active'); });
 								btn.classList.add('active');
 								picker.hidden = true;
-								changeBtn.hidden = false;
+								selectedName.textContent = btn.querySelector('.service-pick-name').textContent + ' — ' + btn.querySelector('.service-pick-sub').textContent;
+								selectedBar.hidden = false;
 								container.innerHTML = '';
 								waitForCalendly(function () {
 									Calendly.initInlineWidget({
@@ -1277,7 +1307,7 @@
 
 						changeBtn.addEventListener('click', function () {
 							buttons.forEach(function (b) { b.classList.remove('active'); });
-							changeBtn.hidden = true;
+							selectedBar.hidden = true;
 							picker.hidden = false;
 							container.innerHTML = '<p class="calendly-placeholder">Choose a service above to see available times.</p>';
 						});
