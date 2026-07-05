@@ -714,6 +714,28 @@
 		.service-pick-btn.active .service-pick-name { color: var(--parchment); }
 		.service-pick-btn.active .service-pick-sub { color: var(--stone); }
 
+		.change-service-btn {
+			display: block;
+			width: 100%;
+			background: var(--parchment);
+			border: none;
+			border-bottom: 1.5px solid var(--border);
+			color: var(--pine-mid);
+			font-family: 'DM Sans', sans-serif;
+			font-size: 0.78rem;
+			font-weight: 500;
+			letter-spacing: 0.1em;
+			text-transform: uppercase;
+			padding: 0.9rem 1.2rem;
+			cursor: pointer;
+			transition: background 0.2s, color 0.2s;
+		}
+
+		.change-service-btn:hover {
+			background: var(--pine-pale);
+			color: var(--pine);
+		}
+
 		.calendly-embed-container {
 			min-height: 700px;
 		}
@@ -1215,6 +1237,7 @@
 							<span class="service-pick-sub">Full Detail</span>
 						</button>
 					</div>
+					<button type="button" id="change-service-btn" class="change-service-btn" hidden>Change job type</button>
 					<div id="calendly-embed" class="calendly-embed-container">
 						<p class="calendly-placeholder">Choose a service above to see available times.</p>
 					</div>
@@ -1222,8 +1245,10 @@
 				<script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
 				<script>
 					(function () {
+						var picker = document.querySelector('.service-picker');
 						var buttons = document.querySelectorAll('.service-pick-btn');
 						var container = document.getElementById('calendly-embed');
+						var changeBtn = document.getElementById('change-service-btn');
 
 						function waitForCalendly(cb) {
 							if (window.Calendly) { cb(); } else { setTimeout(function () { waitForCalendly(cb); }, 100); }
@@ -1233,6 +1258,8 @@
 							btn.addEventListener('click', function () {
 								buttons.forEach(function (b) { b.classList.remove('active'); });
 								btn.classList.add('active');
+								picker.hidden = true;
+								changeBtn.hidden = false;
 								container.innerHTML = '';
 								waitForCalendly(function () {
 									Calendly.initInlineWidget({
@@ -1241,6 +1268,13 @@
 									});
 								});
 							});
+						});
+
+						changeBtn.addEventListener('click', function () {
+							buttons.forEach(function (b) { b.classList.remove('active'); });
+							changeBtn.hidden = true;
+							picker.hidden = false;
+							container.innerHTML = '<p class="calendly-placeholder">Choose a service above to see available times.</p>';
 						});
 					})();
 				</script>
