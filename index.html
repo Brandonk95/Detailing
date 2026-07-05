@@ -662,6 +662,71 @@
 
 		.form-wrapper .calendly-inline-widget { display: block; }
 
+		.service-picker {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+			gap: 0.7rem;
+			padding: 1.2rem;
+			border-bottom: 1.5px solid var(--border);
+		}
+
+		.service-pick-btn {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 0.15rem;
+			background: var(--parchment);
+			border: 1.5px solid var(--border-dark);
+			border-radius: 3px;
+			padding: 0.65rem 0.85rem;
+			cursor: pointer;
+			font-family: 'DM Sans', sans-serif;
+			text-align: left;
+			transition: border-color 0.2s, background 0.2s, transform 0.15s;
+		}
+
+		.service-pick-btn:hover {
+			border-color: var(--pine);
+			transform: translateY(-1px);
+		}
+
+		.service-pick-btn.active {
+			background: var(--pine);
+			border-color: var(--pine);
+		}
+
+		.service-pick-name {
+			font-size: 0.82rem;
+			font-weight: 700;
+			color: var(--ink-mid);
+		}
+
+		.service-pick-sub {
+			font-size: 0.62rem;
+			letter-spacing: 0.1em;
+			text-transform: uppercase;
+			color: var(--ink-muted);
+		}
+
+		.service-pick-btn.active .service-pick-name { color: var(--parchment); }
+		.service-pick-btn.active .service-pick-sub { color: var(--stone); }
+
+		.calendly-embed-container {
+			min-height: 700px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.calendly-placeholder {
+			color: var(--ink-muted);
+			font-family: 'Lora', serif;
+			font-style: italic;
+			font-size: 0.95rem;
+			text-align: center;
+			padding: 2rem;
+		}
+
 		/* ---- FOOTER ---- */
 		footer {
 			background: var(--ink);
@@ -1120,11 +1185,57 @@
 					</div>
 				</div>
 				<div class="form-wrapper">
-					<!-- Calendly inline widget begin -->
-					<div class="calendly-inline-widget" data-url="https://calendly.com/bdkeesee/detail?hide_event_type_details=1&hide_gdpr_banner=1&background_color=f5f0e8&primary_color=2c4a2e" style="min-width:320px;height:601px;"></div>
-					<script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
-					<!-- Calendly inline widget end -->
+					<div class="service-picker">
+						<button type="button" class="service-pick-btn" data-url="https://calendly.com/bdkeesee/detail-job-clone?hide_event_type_details=1&hide_gdpr_banner=1&background_color=f5f0e8&primary_color=2c4a2e">
+							<span class="service-pick-name">The Usual</span>
+							<span class="service-pick-sub">Basic Exterior</span>
+						</button>
+						<button type="button" class="service-pick-btn" data-url="https://calendly.com/bdkeesee/the-usual-basic-detail-clone?hide_event_type_details=1&hide_gdpr_banner=1&background_color=f5f0e8&primary_color=2c4a2e">
+							<span class="service-pick-name">Trail Ready</span>
+							<span class="service-pick-sub">Full Exterior</span>
+						</button>
+						<button type="button" class="service-pick-btn" data-url="https://calendly.com/bdkeesee/trail-ready-full-exterior-clone?hide_event_type_details=1&hide_gdpr_banner=1&background_color=f5f0e8&primary_color=2c4a2e">
+							<span class="service-pick-name">Mud Season</span>
+							<span class="service-pick-sub">Basic Interior</span>
+						</button>
+						<button type="button" class="service-pick-btn" data-url="https://calendly.com/bdkeesee/mud-season-basic-interior-clone?hide_event_type_details=1&hide_gdpr_banner=1&background_color=f5f0e8&primary_color=2c4a2e">
+							<span class="service-pick-name">Date Night</span>
+							<span class="service-pick-sub">Full Interior</span>
+						</button>
+						<button type="button" class="service-pick-btn" data-url="https://calendly.com/bdkeesee/date-night-full-exterior-clone?hide_event_type_details=1&background_color=f5f0e8&primary_color=2c4a2e">
+							<span class="service-pick-name">Showstopper</span>
+							<span class="service-pick-sub">Full Detail</span>
+						</button>
+					</div>
+					<div id="calendly-embed" class="calendly-embed-container">
+						<p class="calendly-placeholder">Choose a service above to see available times.</p>
+					</div>
 				</div>
+				<script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+				<script>
+					(function () {
+						var buttons = document.querySelectorAll('.service-pick-btn');
+						var container = document.getElementById('calendly-embed');
+
+						function waitForCalendly(cb) {
+							if (window.Calendly) { cb(); } else { setTimeout(function () { waitForCalendly(cb); }, 100); }
+						}
+
+						buttons.forEach(function (btn) {
+							btn.addEventListener('click', function () {
+								buttons.forEach(function (b) { b.classList.remove('active'); });
+								btn.classList.add('active');
+								container.innerHTML = '';
+								waitForCalendly(function () {
+									Calendly.initInlineWidget({
+										url: btn.dataset.url,
+										parentElement: container
+									});
+								});
+							});
+						});
+					})();
+				</script>
 			</div>
 		</div>
 	</section>
