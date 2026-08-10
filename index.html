@@ -956,9 +956,204 @@
 			.pricing-tier-sub { font-size: 0.52rem; letter-spacing: 0.1em; }
 			.pricing-table th { font-size: 0.6rem; letter-spacing: 0.1em; }
 		}
+
+		/* ---- CLOSED PAGE ---- */
+		#closed-page { display: none; }
+
+		html.is-closed #site-content { display: none; }
+		html.is-closed #closed-page { display: flex; }
+
+		#closed-page {
+			min-height: 100vh;
+			align-items: center;
+			justify-content: center;
+			background: var(--parchment);
+			padding: 2rem;
+		}
+
+		.closed-box {
+			max-width: 480px;
+			text-align: center;
+			background: var(--parchment-d);
+			border: 1.5px solid var(--border);
+			border-radius: 6px;
+			padding: 3rem 2.5rem;
+		}
+
+		.closed-box h1 {
+			font-family: 'Playfair Display', serif;
+			font-weight: 900;
+			font-size: 2rem;
+			color: var(--pine);
+			margin-bottom: 1rem;
+		}
+
+		.closed-box p {
+			font-family: 'Lora', serif;
+			color: var(--ink-soft);
+			font-size: 0.95rem;
+			line-height: 1.7;
+			margin-bottom: 1rem;
+		}
+
+		.closed-box a { color: var(--pine-mid); }
+
+		#force-login-btn {
+			margin-top: 1.5rem;
+			background: transparent;
+			border: 1.5px solid var(--border-dark);
+			border-radius: 3px;
+			color: var(--ink-muted);
+			font-family: 'DM Sans', sans-serif;
+			font-size: 0.7rem;
+			letter-spacing: 0.12em;
+			text-transform: uppercase;
+			padding: 0.5rem 1rem;
+			cursor: pointer;
+			transition: border-color 0.2s, color 0.2s;
+		}
+
+		#force-login-btn:hover {
+			border-color: var(--pine);
+			color: var(--pine);
+		}
+
+		#login-form {
+			margin-top: 1.5rem;
+			display: flex;
+			flex-direction: column;
+			gap: 0.6rem;
+			align-items: center;
+		}
+
+		#login-form[hidden] { display: none; }
+
+		#login-password {
+			width: 100%;
+			max-width: 240px;
+			padding: 0.6rem 0.8rem;
+			border: 1.5px solid var(--border-dark);
+			border-radius: 3px;
+			font-family: 'DM Sans', sans-serif;
+			font-size: 0.85rem;
+			background: var(--parchment);
+			color: var(--ink);
+		}
+
+		#login-submit {
+			background: var(--pine);
+			color: var(--parchment);
+			border: none;
+			border-radius: 3px;
+			font-family: 'DM Sans', sans-serif;
+			font-size: 0.75rem;
+			letter-spacing: 0.1em;
+			text-transform: uppercase;
+			padding: 0.6rem 1.4rem;
+			cursor: pointer;
+			transition: background 0.2s;
+		}
+
+		#login-submit:hover { background: var(--pine-mid); }
+
+		#login-error {
+			color: var(--rust);
+			font-size: 0.8rem;
+			margin-top: 0.3rem;
+		}
+
+		#login-error[hidden] { display: none; }
+
+		/* ---- NOTICE MODAL ---- */
+		.notice-modal {
+			position: fixed;
+			inset: 0;
+			background: rgba(30, 26, 20, 0.55);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 1.5rem;
+			z-index: 1000;
+		}
+
+		.notice-modal-box {
+			position: relative;
+			max-width: 420px;
+			background: var(--parchment);
+			border: 1.5px solid var(--border);
+			border-radius: 6px;
+			padding: 2.2rem 2rem;
+			box-shadow: 0 20px 50px rgba(30, 26, 20, 0.3);
+		}
+
+		.notice-modal-box h3 {
+			font-family: 'Playfair Display', serif;
+			font-weight: 900;
+			font-size: 1.3rem;
+			color: var(--pine);
+			margin-bottom: 0.8rem;
+		}
+
+		.notice-modal-box p {
+			font-family: 'Lora', serif;
+			font-size: 0.9rem;
+			color: var(--ink-soft);
+			line-height: 1.65;
+			margin-bottom: 0.7rem;
+		}
+
+		.notice-modal-box p:last-of-type { margin-bottom: 0; }
+
+		.notice-close {
+			position: absolute;
+			top: 0.7rem;
+			right: 0.9rem;
+			background: none;
+			border: none;
+			font-size: 1.4rem;
+			line-height: 1;
+			color: var(--ink-muted);
+			cursor: pointer;
+		}
+
+		.notice-close:hover { color: var(--pine); }
 	</style>
 </head>
 <body>
+
+	<script>
+	(function () {
+		var CLOSE_DATE = new Date(2026, 7, 17, 0, 0, 0);
+		if (new Date() >= CLOSE_DATE && sessionStorage.getItem('siteBypass') !== '1') {
+			document.documentElement.classList.add('is-closed');
+		}
+	})();
+	</script>
+
+	<div id="closed-page">
+		<div class="closed-box">
+			<h1>We're Closed</h1>
+			<p>Thanks so much for your interest! I'm not taking new bookings right now &mdash; I started school and won't be available for details until further notice.</p>
+			<p>Feel free to reach out at <a href="mailto:bdkeesee@gmail.com">bdkeesee@gmail.com</a> with any questions.</p>
+			<button type="button" id="force-login-btn">Force Login</button>
+			<div id="login-form" hidden>
+				<input type="password" id="login-password" placeholder="Password">
+				<button type="button" id="login-submit">Enter</button>
+				<p id="login-error" hidden>Incorrect password.</p>
+			</div>
+		</div>
+	</div>
+
+	<div id="site-content">
+
+	<div class="notice-modal" id="notice-modal">
+		<div class="notice-modal-box">
+			<button type="button" class="notice-close" id="notice-close" aria-label="Close">&times;</button>
+			<h3>Booking Notice</h3>
+			<p>Thank you for your interest! The last day I'm available for bookings is <strong>August 16th</strong> &mdash; I'm starting school and won't be taking new appointments after that.</p>
+			<p>Get your booking in before then!</p>
+		</div>
+	</div>
 
 	<!-- NAV -->
 	<nav>
@@ -1330,6 +1525,52 @@
 			<p class="footer-copy">&copy; 2025 Brandon's Auto Detail &mdash; Mantua, UT</p>
 		</div>
 	</footer>
+
+	</div>
+
+	<script>
+	(function () {
+		var loginBtn = document.getElementById('force-login-btn');
+		var loginForm = document.getElementById('login-form');
+		var passwordInput = document.getElementById('login-password');
+		var submitBtn = document.getElementById('login-submit');
+		var errorMsg = document.getElementById('login-error');
+
+		function attemptLogin() {
+			if (passwordInput.value === 'Brandon2007') {
+				sessionStorage.setItem('siteBypass', '1');
+				document.documentElement.classList.remove('is-closed');
+			} else {
+				errorMsg.hidden = false;
+			}
+		}
+
+		if (loginBtn) {
+			loginBtn.addEventListener('click', function () {
+				loginForm.hidden = false;
+				loginBtn.hidden = true;
+				passwordInput.focus();
+			});
+			submitBtn.addEventListener('click', attemptLogin);
+			passwordInput.addEventListener('keydown', function (e) {
+				if (e.key === 'Enter') attemptLogin();
+			});
+		}
+
+		var modal = document.getElementById('notice-modal');
+		var closeBtn = document.getElementById('notice-close');
+		if (modal && closeBtn) {
+			if (sessionStorage.getItem('noticeDismissed') === '1') {
+				modal.style.display = 'none';
+			} else {
+				closeBtn.addEventListener('click', function () {
+					modal.style.display = 'none';
+					sessionStorage.setItem('noticeDismissed', '1');
+				});
+			}
+		}
+	})();
+	</script>
 
 </body>
 </html>
